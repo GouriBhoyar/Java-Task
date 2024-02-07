@@ -1,0 +1,152 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class AdmissionForm extends JFrame {
+
+    private JTextField fullNameTextField;
+    private JTextField phoneTextField;
+    private JComboBox<String> streamComboBox;
+    private JRadioButton maleRadioButton;
+    private JRadioButton femaleRadioButton;
+    private JCheckBox mathCheckBox;
+    private JCheckBox physicsCheckBox;
+    private JCheckBox chemistryCheckBox;
+    private JTextArea addressTextArea;
+    private JButton submitButton;
+
+    public AdmissionForm() {
+        setTitle("Admission Form");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(600, 400);
+
+        JPanel panel = new JPanel();
+        placeComponents(panel);
+
+        add(panel);
+        setVisible(true);
+    }
+
+    private void placeComponents(JPanel panel) {
+        panel.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.insets = new Insets(5, 5, 5, 5);
+
+        // Full Name
+        JLabel nameLabel = new JLabel("Full Name:");
+        panel.add(nameLabel, gbc);
+
+        gbc.gridx++;
+        fullNameTextField = new JTextField(20);
+        panel.add(fullNameTextField, gbc);
+
+        // Phone Number
+        gbc.gridx = 0;
+        gbc.gridy++;
+        JLabel phoneLabel = new JLabel("Phone No:");
+        panel.add(phoneLabel, gbc);
+
+        gbc.gridx++;
+        phoneTextField = new JTextField(10);
+        panel.add(phoneTextField, gbc);
+
+        // Stream
+        gbc.gridx = 0;
+        gbc.gridy++;
+        JLabel streamLabel = new JLabel("Stream:");
+        panel.add(streamLabel, gbc);
+
+        gbc.gridx++;
+        String[] streams = {"Science", "Commerce", "Arts"};
+        streamComboBox = new JComboBox<>(streams);
+        panel.add(streamComboBox, gbc);
+
+        // Gender
+        gbc.gridx = 0;
+        gbc.gridy++;
+        JLabel genderLabel = new JLabel("Gender:");
+        panel.add(genderLabel, gbc);
+
+        gbc.gridx++;
+        maleRadioButton = new JRadioButton("Male");
+        femaleRadioButton = new JRadioButton("Female");
+        ButtonGroup genderGroup = new ButtonGroup();
+        genderGroup.add(maleRadioButton);
+        genderGroup.add(femaleRadioButton);
+        panel.add(maleRadioButton, gbc);
+        gbc.gridx++;
+        panel.add(femaleRadioButton, gbc);
+
+        // Subjects
+        gbc.gridx = 0;
+        gbc.gridy++;
+        JLabel subjectsLabel = new JLabel("Subjects:");
+        panel.add(subjectsLabel, gbc);
+
+        gbc.gridx++;
+        mathCheckBox = new JCheckBox("Math");
+        physicsCheckBox = new JCheckBox("Physics");
+        chemistryCheckBox = new JCheckBox("Chemistry");
+        panel.add(mathCheckBox, gbc);
+        gbc.gridx++;
+        panel.add(physicsCheckBox, gbc);
+        gbc.gridx++;
+        panel.add(chemistryCheckBox, gbc);
+
+        // Address
+        gbc.gridx = 0;
+        gbc.gridy++;
+        JLabel addressLabel = new JLabel("Address:");
+        panel.add(addressLabel, gbc);
+
+        gbc.gridx++;
+        gbc.gridwidth = 2;
+        addressTextArea = new JTextArea(5, 20);
+        addressTextArea.setLineWrap(true);
+        JScrollPane addressScrollPane = new JScrollPane(addressTextArea);
+        panel.add(addressScrollPane, gbc);
+
+        // Submit Button
+        gbc.gridx = 0;
+        gbc.gridy++;
+        gbc.gridwidth = 3;
+        submitButton = new JButton("Submit");
+        panel.add(submitButton, gbc);
+
+        // Add action listener to the submit button
+        submitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                submitForm();
+            }
+        });
+    }
+
+    private void submitForm() {
+        String fullName = fullNameTextField.getText();
+        String phone = phoneTextField.getText();
+        String selectedStream = (String) streamComboBox.getSelectedItem();
+        String gender = maleRadioButton.isSelected() ? "Male" : "Female";
+        String subjects = "";
+        if (mathCheckBox.isSelected()) subjects += "Math ";
+        if (physicsCheckBox.isSelected()) subjects += "Physics ";
+        if (chemistryCheckBox.isSelected()) subjects += "Chemistry";
+        String address = addressTextArea.getText();
+
+        // Process the form data (e.g., print to console)
+        System.out.println("Full Name: " + fullName);
+        System.out.println("Phone No: " + phone);
+        System.out.println("Stream: " + selectedStream);
+        System.out.println("Gender: " + gender);
+        System.out.println("Subjects: " + subjects);
+        System.out.println("Address: " + address);
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new AdmissionForm());
+    }
+}   
+
